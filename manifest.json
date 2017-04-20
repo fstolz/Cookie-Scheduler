@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+
+  "name": "Chrome Cookie Plugin",
+  "description": "This extension will automatically delete cookies",
+  "version": "1.0",
+
+  "browser_action": {
+   "default_icon": "cookie-19.png",
+   "default_popup": "popup.html"
+  },
+  "permissions": [
+   "activeTab",   // wahrscheinlich unnötig
+   "tabs",
+   "storage"
+  ],
+  "background": {
+    "scripts": ["eventPage.js"],
+    "persistent": true
+  }
+}
