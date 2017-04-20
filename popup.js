@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var protocol = pathArray[0];
     var host = pathArray[2];
     url = protocol + "//" + host;
-    document.getElementById("mytitle").innerHTML = "settings for: " + url;
+    document.getElementById("urlTitle").innerHTML = "settings for: " + url;
 
     chooseInitialRadio(url);
     chrome.storage.local.set({"currentUrl" : url});

@@ -1,13 +1,5 @@
 var tabToUrl = {};
 
-function update(tab) {
-  var key = "tabToUrl_" + tab.id;
-  var obj= {};
-  obj[key] = tab.url;
-
-  chrome.storage.local.set(obj);
-}
-
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) { update(tab); });
 chrome.tabs.onCreated.addListener(function(tab) {                    update(tab); });
 
@@ -17,8 +9,46 @@ chrome.tabs.onRemoved.addListener(function(tabId, removeInfo) {
     var url = result[key];
     console.log("closed tab with url " + url);
     chrome.storage.local.remove(key);
+
+    deleteCookiesIfApplicable(url);
   });
 });
+
+function deleteCookiesIfApplicable(url) {
+  var key = "colourValue_" + url;
+
+  chrome.storage.local.get(key, function(result) {
+    var colour = result[key];
+    if (colour == null || colour == "" || colour == "Std") {
+      chrome.storage.local.get("colourValueStandard", function(result) {
+        var colour = result["colourValueStandard"];
+        if (colour == null || colour == "") {
+          colour = "Green";
+        }
+        deleteByColour(url, colour);
+      });
+    } else {
+      deleteByColour(url, colour);
+    }
+  }
+}
+functino deleteByColour(url, colour) {
+  if (colour == "Green") {
+  // do nothing
+  } else if (colour == "Yellow") {
+  // delete when browser is being closed
+  } else if (colour == "Red") {
+  // delete if there's no other tab left
+  }
+}
+
+function update(tab) {
+  var key = "tabToUrl_" + tab.id;
+  var obj= {};
+  obj[key] = tab.url;
+
+  chrome.storage.local.set(obj);
+}
 
 
 /*
