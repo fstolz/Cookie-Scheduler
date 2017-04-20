@@ -32,13 +32,36 @@ function deleteCookiesIfApplicable(url) {
     }
   }
 }
-functino deleteByColour(url, colour) {
+function deleteByColour(deleteUrl, colour) {
   if (colour == "Green") {
   // do nothing
   } else if (colour == "Yellow") {
   // delete when browser is being closed
   } else if (colour == "Red") {
   // delete if there's no other tab left
+    chrome.tabs.query({}, function(array_of_Tabs) {
+      var tab : Tab;
+      var url;
+      for (var i : int = 0; i < array_of_Tabs.length; i++) {
+        tab = array_of_Tabs[i];
+        url = tab.url;
+        var pathArray = url.split( "/" );
+        var protocol = pathArray[0];
+        var host = pathArray[2];
+        url = protocol + "//" + host;
+        if (url == deleteUrl) {
+          return;
+        }
+      }
+      // if we get here, there's no open tab left from the same page
+      var obj= {};
+      obj["url"] = deleteUrl;
+      chrome.cookies.getAll(obj, function(cookies) {
+        for (int i = 0; i < cookies.length; i++) {
+//          chrome.cookies.remove({url:cookies[i].url, name:cookies[i].name});
+        }
+      });
+    });
   }
 }
 
