@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById("labelYellow").addEventListener('click', function(){radioClick("Yellow")});
   document.getElementById("labelGreen").addEventListener('click', function(){radioClick("Green")});
 
+  document.getElementById("showStdButton").addEventListener('click', function(){showHideStd();})
+
 
   chrome.tabs.getSelected(null, function(tab) {
     var url = tab.url;
@@ -16,12 +18,22 @@ document.addEventListener('DOMContentLoaded', function() {
     var protocol = pathArray[0];
     var host = pathArray[2];
     url = protocol + "//" + host;
-    document.getElementById("mytitle").innerHTML = url;
+    document.getElementById("mytitle").innerHTML = "settings for: " + url;
 
     chooseInitialRadio(url);
     chrome.storage.local.set({"currentUrl" : url});
   });
 }, false);
+
+
+function showHideStd() {
+  var fieldSet = document.getElementById("standardFieldset");
+  if (fieldSet.style.display == "none") {
+    fieldSet.style.display = "inline";
+  } else {
+    fieldSet.style.display = "none";
+  }
+}
 
 
 function radioClick(colour) {
