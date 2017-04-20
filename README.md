@@ -1,5 +1,5 @@
 # Cookie-Scheduler
-Chrome addon to automatically delete cookies, comparable to https://addons.mozilla.org/firefox/addon/self-destructing-cookies/
+Chrome addon to automatically delete cookies, inspired by https://addons.mozilla.org/firefox/addon/self-destructing-cookies/
 
 
 # Done:
@@ -13,5 +13,5 @@ Chrome addon to automatically delete cookies, comparable to https://addons.mozil
 # TO DO:
 - react to background events
   - go through list of closed tabs
-  - compare each tab's url to stored settings
+  - get stored settings for each tab's url
   - delete cookies if needed
