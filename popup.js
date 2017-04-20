@@ -1,13 +1,20 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-  document.getElementById("radioStd").addEventListener('click', function(){radioClick("Std")});
-  document.getElementById("radioRed").addEventListener('click', function(){radioClick("Red")});
-  document.getElementById("radioYellow").addEventListener('click', function(){radioClick("Yellow")});
-  document.getElementById("radioGreen").addEventListener('click', function(){radioClick("Green")});
-  document.getElementById("labelStd").addEventListener('click', function(){radioClick("Std")});
-  document.getElementById("labelRed").addEventListener('click', function(){radioClick("Red")});
-  document.getElementById("labelYellow").addEventListener('click', function(){radioClick("Yellow")});
-  document.getElementById("labelGreen").addEventListener('click', function(){radioClick("Green")});
+  document.getElementById("radioStd").addEventListener('click', function(){urlRadioClick("Std")});
+  document.getElementById("radioRed").addEventListener('click', function(){urlRadioClick("Red")});
+  document.getElementById("radioYellow").addEventListener('click', function(){urlRadioClick("Yellow")});
+  document.getElementById("radioGreen").addEventListener('click', function(){urlRadioClick("Green")});
+  document.getElementById("labelStd").addEventListener('click', function(){urlRadioClick("Std")});
+  document.getElementById("labelRed").addEventListener('click', function(){urlRadioClick("Red")});
+  document.getElementById("labelYellow").addEventListener('click', function(){urlRadioClick("Yellow")});
+  document.getElementById("labelGreen").addEventListener('click', function(){urlRadioClick("Green")});
+
+  document.getElementById("radioRedS").addEventListener('click', function(){stdRadioClick("Red")});
+  document.getElementById("radioYellowS").addEventListener('click', function(){stdRadioClick("Yellow")});
+  document.getElementById("radioGreenS").addEventListener('click', function(){stdRadioClick("Green")});
+  document.getElementById("labelRedS").addEventListener('click', function(){stdRadioClick("Red")});
+  document.getElementById("labelYellowS").addEventListener('click', function(){stdRadioClick("Yellow")});
+  document.getElementById("labelGreenS").addEventListener('click', function(){stdRadioClick("Green")});
 
   document.getElementById("showStdButton").addEventListener('click', function(){showHideStd();})
 
@@ -35,8 +42,7 @@ function showHideStd() {
   }
 }
 
-
-function radioClick(colour) {
+function urlRadioClick(colour) {
   chrome.storage.local.get("currentUrl", function(result) {
     var url = result["currentUrl"];
 
@@ -48,6 +54,13 @@ function radioClick(colour) {
   });
 }
 
+function stdRadioClick(colour) {
+  var key = "colourValueStandard";
+  var obj = {};
+  obj[key] = colour;
+  chrome.storage.local.set(obj);
+}
+
 function chooseInitialRadio(url) {
   var key = "colourValue_" + url;
 
@@ -57,6 +70,16 @@ function chooseInitialRadio(url) {
       document.getElementById("radioStd").checked = true;
     } else {
       document.getElementById("radio" + colour).checked = true;
+    }
+  });
+
+  key = "colourValueStandard";
+  chrome.storage.local.get(key, function(result) {
+    var colour = result[key];
+    if (colour == null || colour == "") {
+      document.getElementById("radioGreenS").checked = true;
+    } else {
+      document.getElementById("radio" + colour + "S").checked = true;
     }
   });
 }
