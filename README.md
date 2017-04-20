@@ -9,9 +9,13 @@ Chrome addon to automatically delete cookies, inspired by https://addons.mozilla
 - Store standard settings
 - Catch background events
   - find out closed tab(s)
+- React to background events
+  - "Green" setting (do nothing)
+
+# Needs Testing:
+- React to background events
+  - "Red" setting (delete if no other tabs from same page left)
 
 # TO DO:
-- react to background events
-  - go through list of closed tabs
-  - get stored settings for each tab's url
-  - delete cookies if needed
+- React to background events
+  - "Yellow" setting (delete when / after browser is being closed
